@@ -13,3 +13,23 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id          Int      @id @default(autoincrement())
+  email       String   @unique
+  fullName        String   
+  phone           String
+  identityDoc String
+  identityDocImg String 
+  profilePhoto    String
+  password    String
+  birthDate   DateTime
+  homeAdress  String
+  role        String   @default("user") // "user", "mechanic", "company", "craneDriver"
+  isVerified  Boolean  @default(false)
+  createdAt       DateTime  @default(now())
+}
+
+
+
+

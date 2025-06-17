@@ -15,21 +15,218 @@ datasource db {
 }
 
 model User {
-  id          Int      @id @default(autoincrement())
-  email       String   @unique
-  fullName        String   
-  phone           String
-  identityDoc String
-  identityDocImg String 
-  profilePhoto    String
-  password    String
-  birthDate   DateTime
-  homeAdress  String
-  role        String   @default("user") // "user", "mechanic", "company", "craneDriver"
-  isVerified  Boolean  @default(false)
-  createdAt       DateTime  @default(now())
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
+  phone        String    @unique
+  password     String
+  first_name    String
+  last_name     String
+  birth_date    DateTime
+  user_type     UserType
+  created_at    DateTime  @default(now())
+
+  personalVerification PersonalVerification?
+  company              Company?
+  orders               Order[]
+  wallet               Wallet?
+  history              History[]
+
+  @@map("users")
 }
 
+model PersonalVerification {
+  id                 Int      @id @default(autoincrement())
+  user               User     @relation(fields: [user_id], references: [id])
+  user_id             Int      @unique
+  face_photo          String
+  id_photo            String
+  address            String
+  verification_status VerificationStatus
 
+  @@map("personal_verifications")
+}
 
+model Company {
+  id                 Int      @id @default(autoincrement())
+  user               User     @relation(fields: [user_id], references: [id])
+  user_id             Int @unique
+  company_name        String
+  tax_id              String
+  address            String
+  permits            String
+  documents          String
+  verification_status VerificationStatus
 
+  services           Service[]
+  products           Product[]
+  loyalty_programs    LoyaltyProgram[]
+
+  @@map("companies")
+}
+
+model Service {
+  id          Int      @id @default(autoincrement())
+  company     Company  @relation(fields: [company_id], references: [id])
+  company_id   Int
+  service_type ServiceType
+  description String
+  base_price   Float
+  price_per_km  Float
+  available   Boolean
+  radius_km    Int
+  schedule    String
+
+  orders      Order[]
+  promotions  Promotion[]
+
+  @@map("services")
+}
+
+model Product {
+  id          Int     @id @default(autoincrement())
+  company     Company @relation(fields: [company_id], references: [id])
+  company_id   Int
+  title       String
+  description String
+  images      String
+  price       Float
+  quantity    Int
+  available   Boolean
+
+  orders      Order[]
+
+  @@map("products")
+}
+
+model Order {
+  id              Int      @id @default(autoincrement())
+  user            User     @relation(fields: [user_id], references: [id])
+  user_id          Int
+  service         Service? @relation(fields: [service_id], references: [id])
+  service_id       Int?
+  product         Product? @relation(fields: [product_id], references: [id])
+  product_id       Int?
+  order_type       OrderType
+  status          OrderStatus
+  delivery_address String
+  total_price      Float
+  created_at       DateTime @default(now())
+
+  history         History[]
+
+  @@map("orders")
+}
+
+model Wallet {
+  id      Int           @id @default(autoincrement())
+  user    User          @relation(fields: [user_id], references: [id])
+  user_id  Int           @unique
+  balance Float
+
+  transactions Transaction[]
+
+  @@map("wallets")
+}
+
+model Transaction {
+  id              Int            @id @default(autoincrement())
+  wallet          Wallet         @relation(fields: [wallet_id], references: [id])
+  wallet_id        Int
+  transaction_type TransactionType
+  amount          Float
+  payment_method   PaymentMethod
+  date            DateTime       @default(now())
+
+  @@map("transactions")
+}
+
+model Promotion {
+  id          Int      @id @default(autoincrement())
+  service     Service   @relation(fields: [service_id], references: [id])
+  service_id   Int
+  title       String
+  description String
+  start_date   DateTime
+  end_date     DateTime
+  active      Boolean
+
+  @@map("promotions")
+}
+
+model LoyaltyProgram {
+  id           Int       @id @default(autoincrement())
+  company      Company   @relation(fields: [company_id], references: [id])
+  company_id    Int
+  benefit_type  BenefitType
+  description  String
+  conditions   String
+  active       Boolean
+
+  @@map("loyalty_programs")
+}
+
+model History {
+  id      Int     @id @default(autoincrement())
+  user    User    @relation(fields: [user_id], references: [id])
+  user_id  Int
+  order   Order   @relation(fields: [order_id], references: [id])
+  order_id Int
+  type    HistoryType
+  date    DateTime @default(now())
+
+  @@map("histories")
+}
+
+enum UserType {
+  customer
+  company
+  tow_truck
+  mechanic
+}
+
+enum VerificationStatus {
+  pending
+  approved
+  rejected
+}
+
+enum ServiceType {
+  mobile_mechanic
+  workshop_mechanic
+  tow_truck
+}
+
+enum OrderType {
+  service
+  product
+}
+
+enum OrderStatus {
+  pending
+  in_progress
+  completed
+  cancelled
+}
+
+enum TransactionType {
+  deposit
+  withdrawal
+  payment
+  commission
+}
+
+enum PaymentMethod {
+  mobile_payment
+  binance
+  cash
+}
+
+enum BenefitType {
+  discount
+  free_service
+}
+
+enum HistoryType {
+  purchase
+  sale
+}

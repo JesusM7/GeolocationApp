@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//Modelo inicial solicitud SolicitudDelivery
+
+model Usuario {
+  id          Int                 @id @default(autoincrement())
+  nombre      String
+  email       String              @unique
+  ubicacion   String?             // dirección textual
+  solicitudes SolicitudDelivery[] // Relación uno a muchos
+}
+
+model Proveedor {
+  id          Int                 @id @default(autoincrement())
+  nombre      String
+  tipo        String              // grua | mecanico | tienda
+  latitud     Float
+  longitud    Float
+  radioKm     Float               // radio de cobertura
+  disponible  Boolean             @default(true)
+  solicitudes SolicitudDelivery[]
+}
+
+model SolicitudDelivery {
+  id          Int       @id @default(autoincrement())
+  tipoServicio String   // grua | mecanico | repuesto
+  latitud     Float
+  longitud    Float
+  estado      String    @default("pendiente")
+  fecha       DateTime  @default(now())
+  clienteId   Int
+  proveedorId Int?
+
+  cliente     Usuario   @relation(fields: [clienteId], references: [id])
+  proveedor   Proveedor? @relation(fields: [proveedorId], references: [id])
+}

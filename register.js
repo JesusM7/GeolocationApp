@@ -38,7 +38,9 @@ const handleRegisterRequest = (req, res) => {
                     <label for="user_type">Tipo de Usuario</label>
                     <select id="user_type" name="user_type">
                         <option value="customer">Cliente</option>
-                        <option value="admin">Admin</option>
+                        <option value="company">Compañia</option>
+                        <option value="mechanic">Mecanico</option>
+                        <option value="tow_truck">Conductor de Grua</option>
                     </select>
                 </div>
                 <div class="input-group">

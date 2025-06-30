@@ -101,7 +101,7 @@ const server = http.createServer(async (req, res) => {
       console.log('Formulario de registro recibido. Datos:', query);
       
       // Extrae los datos del formulario
-      const { email, username, password } = query;
+      const { email, username, password, phone, user_type, last_name } = query;
 
       // Valida que los datos necesarios existan
       if (!email || !username || !password) {
@@ -117,10 +117,10 @@ const server = http.createServer(async (req, res) => {
                   email: email,
                   password: password, // **Aviso:** Se recomienda encarecidamente encripar la contraseña.
                   first_name: username,
-                  last_name: '',
+                  last_name: last_name,
                   birth_date: new Date(),
-                  user_type: 'customer',
-                  phone: '0000000000'
+                  user_type: user_type,
+                  phone: phone
               }
           });
           

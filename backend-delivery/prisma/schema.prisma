@@ -15,6 +15,18 @@ datasource db {
 
 //Modelo inicial solicitud SolicitudDelivery
 
+model User {
+  id          Int      @id @default(autoincrement())
+  email       String   @unique
+  username    String
+  last_name   String?
+  phone       String
+  birth_date  DateTime?
+  user_type   String
+  password    String
+  createdAt   DateTime @default(now())
+}
+
 model Usuario {
   id          Int                 @id @default(autoincrement())
   nombre      String

@@ -162,7 +162,7 @@ const ServicioCard = ({ servicio, onEliminar, onDisponibilidadCambiada }) => {
               onClick={handleToggleDisponibilidad}
               disabled={loading}
             >
-              {loading ? 'Cargando...' : (servicio.disponible ? '⏸️ Marcar no disponible' : '▶️ Marcar disponible')}
+              {loading ? 'Cargando...' : (servicio.disponible ? '⏸️ Pausar' : '▶️ Activar')}
             </button>
 
             {/* Botón de eliminar - para propietario y administrador */}

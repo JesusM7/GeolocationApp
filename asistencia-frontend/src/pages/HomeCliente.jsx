@@ -149,9 +149,10 @@ function HomeCliente() {
         </div>
       </div>
 
+      
       {/* Información útil */}
-      <div className="info-section">
-        <h2>ℹ️ Información útil</h2>
+      <div className="quick-actions-section">
+        <h2><span role="img" aria-label="información">ℹ️</span> Información útil</h2>
         <div className="info-cards">
           <div className="info-card">
             <div className="info-header">
@@ -176,41 +177,6 @@ function HomeCliente() {
           </div>
         </div>
       </div>
-
-      {/* Último servicio */}
-      {estadisticas.ultimoServicio && (
-        <div className="recent-service-section">
-          <h2>🕐 {user?.userType === 'cliente' ? 'Último servicio utilizado' : 'Último servicio publicado'}</h2>
-          <div className="recent-service-card">
-            <div className="service-header">
-              <span className="service-type">
-                {estadisticas.ultimoServicio.tipoServicio === 'grua' ? '🚛' : '🔧'} 
-                {capitalizar(estadisticas.ultimoServicio.tipoServicio || 'Servicio')}
-              </span>
-              <span className="service-status">
-                {estadisticas.ultimoServicio.estado || 'Sin estado'}
-              </span>
-            </div>
-            <p className="service-description">
-              {estadisticas.ultimoServicio.descripcionProblema || 'Sin descripción disponible'}
-            </p>
-            <div className="service-footer">
-              <span className="service-date">
-                {estadisticas.ultimoServicio.fechaCreacion 
-                  ? new Date(estadisticas.ultimoServicio.fechaCreacion).toLocaleDateString()
-                  : 'Fecha no disponible'
-                }
-              </span>
-              <button 
-                className="btn-small"
-                onClick={() => navigate('/servicios')}
-              >
-                Ver detalles
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Botón de ayuda */}
       <div className="help-section">

@@ -2,25 +2,25 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 3rem 1.5rem;
+  padding: 1.5rem 1rem;
   background-color: #ffffff;
   min-height: 100vh;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: inherit;
   color: #212121;
   box-sizing: border-box;
 }
 
 .login-cliente h2 {
   color: #D32F2F;
-  font-size: 2rem;
-  margin-bottom: 2rem;
+  font-size: 1.7rem;
+  margin-bottom: 1.3rem;
   text-align: center;
 }
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
   max-width: 400px;
   width: 100%;
 }
@@ -32,10 +32,10 @@ form {
 }
 
 input {
-  padding: 0.75rem;
-  border: 1px solid #E0E0E0;
+  padding: 8px 10px;
+  border: 2px solid #e9ecef;
   border-radius: 6px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-family: inherit;
   background-color: #ffffff;
   color: #212121;
@@ -63,13 +63,14 @@ button {
   background-color: #D32F2F;
   color: #fff;
   border: none;
-  padding: 0.8rem 1rem;
+  padding: 8px 16px;
   border-radius: 6px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-family: inherit;
   cursor: pointer;
   transition: background-color 0.3s ease, opacity 0.3s ease;
-  margin-top: 0.5rem;
+  margin-top: 0.3rem;
+  font-weight: 500;
 }
 
 button:hover:not(:disabled) {
@@ -82,7 +83,7 @@ button:disabled {
 }
 
 .login-extra {
-  margin-top: 1.5rem;
+  margin-top: 1.2rem;
   text-align: center;
 }
 

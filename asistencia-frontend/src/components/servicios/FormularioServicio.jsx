@@ -502,7 +502,7 @@ const FormularioServicio = ({ servicioId = null, onGuardar, onCancelar }) => {
           </div>
 
           {/* Botón de geolocalización */}
-          <div className="form-group full-width">
+          <div className="form-group">
             <button
               type="button"
               onClick={obtenerUbicacionActual}

@@ -14,12 +14,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
-  height: 80px;
+  padding: 0 16px;
+  height: 70px;
 }
 
 .navbar-brand {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: white;
   text-decoration: none;
@@ -29,8 +29,8 @@
 }
 
 .navbar-logo {
-  width: 150px;
-  height: 150px;
+  width: 130px;
+  height: 130px;
   filter: brightness(0) invert(1); /* Hace que el logo sea blanco */
 }
 
@@ -45,12 +45,12 @@
 .navbar-menu {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 14px;
 }
 
 .navbar-links {
   display: flex;
-  gap: 15px;
+  gap: 12px;
   align-items: center;
 }
 
@@ -61,7 +61,7 @@
   border-radius: 6px;
   font-weight: 500;
   transition: all 0.2s;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
 }
 
 .navbar-link:hover {
@@ -77,7 +77,7 @@
 .navbar-link.register {
   background-color: #28a745;
   border-radius: 20px;
-  padding: 8px 20px;
+  padding: 8px 18px;
 }
 
 .navbar-link.register:hover {
@@ -87,14 +87,14 @@
 .navbar-user {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 12px;
 }
 
 .user-info {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
 .user-email {
@@ -102,20 +102,20 @@
 }
 
 .user-role {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   opacity: 0.8;
   color: #e8f4fd;
 }
 
 .logout-btn {
   background-color: rgba(220, 53, 69, 0.9);
-  color: white;
+  color: rgb(224, 26, 26);
   border: none;
   padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   transition: all 0.2s;
 }
 
@@ -130,70 +130,73 @@
   align-items: center;
 }
 
+/* Mobile */
 @media (max-width: 768px) {
   .navbar-container {
-    padding: 0 15px;
-    height: 70px;
+    height: 65px;
+    padding: 0 12px;
   }
-  
+
   .navbar-brand {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
-  
+
   .navbar-logo {
-    width: 70px;
-    height: 70px;
+    width: 120px;
+    height: 120px;
   }
-  
+
   .navbar-menu {
+    gap: 14px;
+  }
+
+  .navbar-links {
     gap: 10px;
   }
-  
-  .navbar-links {
-    gap: 8px;
-  }
-  
+
   .navbar-link {
     padding: 6px 12px;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
-  
+
+  .navbar-link.register {
+    padding: 6px 14px;
+  }
+
   .user-info {
-    display: none;
+    font-size: 0.75rem;
   }
-  
+
+  .user-role {
+    font-size: 0.65rem;
+  }
+
   .logout-btn {
     padding: 6px 12px;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
 }
 
 @media (max-width: 480px) {
   .navbar-container {
-    flex-direction: row;
-    height: 65px;
-    padding: 10px 15px;
-    gap: 10px;
-  }
-  
-  .navbar-logo {
-    width: 60px;
     height: 60px;
+    padding: 0 10px;
   }
-  
-  .navbar-menu {
-    width: auto;
-    justify-content: flex-end;
+
+  .navbar-brand {
+    font-size: 1.1rem;
   }
-  
-  .navbar-links {
-    flex-wrap: nowrap;
-    justify-content: flex-end;
-    gap: 5px;
+
+  .navbar-logo {
+    width: 110px;
+    height: 110px;
   }
-  
-  .navbar-link {
-    padding: 4px 8px;
-    font-size: 0.8rem;
+
+  .user-info {
+    font-size: 0.7rem;
+  }
+
+  .logout-btn {
+    font-size: 0.7rem;
   }
 } 

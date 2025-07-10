@@ -1,0 +1,173 @@
+.navbar {
+  background: linear-gradient(135deg, #df3838 0%, #c22547 100%);
+  color: white;
+  padding: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  height: 64px;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navbar-brand:hover {
+  color: #e8f4fd;
+}
+
+.navbar-menu {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.navbar-link {
+  color: white;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.2s;
+  font-size: 0.95rem;
+}
+
+.navbar-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #e8f4fd;
+}
+
+.navbar-link.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.navbar-link.register {
+  background-color: #28a745;
+  border-radius: 20px;
+  padding: 8px 20px;
+}
+
+.navbar-link.register:hover {
+  background-color: #1e7e34;
+}
+
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 0.9rem;
+}
+
+.user-email {
+  font-weight: 500;
+}
+
+.user-role {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  color: #e8f4fd;
+}
+
+.logout-btn {
+  background-color: rgba(220, 53, 69, 0.9);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.logout-btn:hover {
+  background-color: #c82333;
+  transform: translateY(-1px);
+}
+
+.navbar-auth {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .navbar-container {
+    padding: 0 15px;
+    height: 56px;
+  }
+  
+  .navbar-brand {
+    font-size: 1.3rem;
+  }
+  
+  .navbar-menu {
+    gap: 10px;
+  }
+  
+  .navbar-links {
+    gap: 8px;
+  }
+  
+  .navbar-link {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+  
+  .user-info {
+    display: none;
+  }
+  
+  .logout-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-container {
+    flex-direction: column;
+    height: auto;
+    padding: 10px 15px;
+    gap: 10px;
+  }
+  
+  .navbar-menu {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .navbar-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+} 

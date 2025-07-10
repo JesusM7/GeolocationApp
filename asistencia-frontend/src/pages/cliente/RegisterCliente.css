@@ -20,13 +20,20 @@
 form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
   max-width: 400px;
   width: 100%;
 }
 
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
 input,
-textarea {
+textarea,
+select {
   padding: 0.75rem;
   border: 1px solid #E0E0E0;
   border-radius: 6px;
@@ -35,11 +42,38 @@ textarea {
   background-color: #ffffff;
   color: #212121;
   box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #D32F2F;
+  box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.1);
+}
+
+input.input-error,
+textarea.input-error,
+select.input-error {
+  border-color: #f44336;
+  box-shadow: 0 0 0 2px rgba(244, 67, 54, 0.1);
+}
+
+input.input-error:focus,
+textarea.input-error:focus,
+select.input-error:focus {
+  border-color: #f44336;
+  box-shadow: 0 0 0 2px rgba(244, 67, 54, 0.2);
 }
 
 textarea {
   min-height: 100px;
   resize: vertical;
+}
+
+select {
+  cursor: pointer;
 }
 
 button {
@@ -51,9 +85,30 @@ button {
   font-size: 1rem;
   font-family: 'Segoe UI', sans-serif;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+  margin-top: 0.5rem;
 }
 
-button:hover {
+button:hover:not(:disabled) {
   background-color: #B71C1C;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.register-extra {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.register-extra a {
+  color: #D32F2F;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.register-extra a:hover {
+  text-decoration: underline;
 }

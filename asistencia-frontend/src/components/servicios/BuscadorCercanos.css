@@ -1,0 +1,240 @@
+.buscador-cercanos-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+  font-size: 2.5rem;
+}
+
+.ubicacion-actual {
+  color: #6c757d;
+  font-size: 1rem;
+  margin-top: 10px;
+  font-family: monospace;
+  background-color: #f8f9fa;
+  padding: 8px 12px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+.filtros-cercanos {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  margin-bottom: 30px;
+  border: 1px solid #e9ecef;
+  display: flex;
+  gap: 20px;
+  align-items: end;
+  flex-wrap: wrap;
+}
+
+.filtro-grupo {
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+}
+
+.filtro-grupo label {
+  color: #495057;
+  font-weight: 500;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.filtro-grupo select {
+  padding: 10px 12px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: white;
+}
+
+.filtro-grupo select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.filtros-cercanos .btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  background-color: #007bff;
+  color: white;
+  height: fit-content;
+  white-space: nowrap;
+}
+
+.filtros-cercanos .btn:hover:not(:disabled) {
+  background-color: #0056b3;
+  transform: translateY(-1px);
+}
+
+.filtros-cercanos .btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.resultados-stats {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #e3f2fd;
+  border-radius: 8px;
+  text-align: center;
+  border-left: 4px solid #2196f3;
+}
+
+.resultados-stats p {
+  margin: 0;
+  color: #1565c0;
+  font-weight: 500;
+}
+
+.servicios-cercanos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.servicio-con-distancia {
+  position: relative;
+}
+
+.distancia-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #28a745;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.no-servicios {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+.no-servicios h3 {
+  color: #6c757d;
+  margin-bottom: 10px;
+}
+
+.no-servicios p {
+  color: #8495a7;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading p {
+  color: #6c757d;
+  font-size: 1.1rem;
+}
+
+.error {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #f8d7da;
+  color: #721c24;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.error h3 {
+  margin-bottom: 15px;
+}
+
+.error button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.error button:hover {
+  background-color: #c82333;
+}
+
+@media (max-width: 768px) {
+  .buscador-cercanos-container {
+    padding: 10px;
+  }
+  
+  .filtros-cercanos {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+  
+  .filtro-grupo {
+    min-width: auto;
+  }
+  
+  .filtros-cercanos .btn {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .servicios-cercanos-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .header h1 {
+    font-size: 2rem;
+  }
+  
+  .ubicacion-actual {
+    font-size: 0.9rem;
+  }
+} 

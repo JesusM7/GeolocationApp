@@ -1,0 +1,232 @@
+.lista-administradores {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.lista-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.lista-header h3 {
+  color: #2c3e50;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+}
+
+.lista-header p {
+  color: #7f8c8d;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.lista-admins-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  text-align: center;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.lista-admins-error {
+  text-align: center;
+  padding: 2rem;
+  background: #ffe6e6;
+  border-radius: 8px;
+  border: 1px solid #ffcccc;
+}
+
+.lista-admins-error h3 {
+  color: #e74c3c;
+  margin: 0 0 1rem 0;
+}
+
+.lista-admins-error p {
+  color: #c0392b;
+  margin-bottom: 1rem;
+}
+
+.no-admins {
+  text-align: center;
+  padding: 3rem;
+  color: #7f8c8d;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 2px dashed #dee2e6;
+}
+
+.admins-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.admin-card {
+  background: linear-gradient(135deg, #f8f9fa, #ffffff);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  position: relative;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.admin-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  border-color: #3498db;
+}
+
+.admin-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem auto;
+  position: relative;
+  z-index: 1;
+}
+
+.admin-avatar span {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.admin-info {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.admin-info h4 {
+  color: #ffffff;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.admin-info p {
+  margin: 0.3rem 0;
+  font-size: 0.9rem;
+  color: #7f8c8d;
+}
+
+.admin-email {
+  font-weight: 500;
+  color: #ffffff !important;
+}
+
+.admin-phone {
+  color: #94ffc0 !important;
+}
+
+.admin-created {
+  font-size: 0.8rem !important;
+  color: #ffffff !important;
+}
+
+.admin-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.badge-admin {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(231, 76, 60, 0.3);
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #2980b9, #21618c);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .lista-administradores {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .admins-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .admin-card {
+    padding: 1rem;
+  }
+  
+  .admin-avatar {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .admin-avatar span {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .lista-header h3 {
+    font-size: 1.3rem;
+  }
+  
+  .admin-info h4 {
+    font-size: 1.1rem;
+  }
+  
+  .admin-info p {
+    font-size: 0.8rem;
+  }
+} 

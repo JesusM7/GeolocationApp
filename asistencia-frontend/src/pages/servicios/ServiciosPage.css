@@ -1,0 +1,129 @@
+.servicios-page {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.servicios-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.servicios-header h1 {
+  margin: 0 0 10px 0;
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+.servicios-header p {
+  margin: 0;
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.servicios-navigation {
+  background: white;
+  border-bottom: 1px solid #e9ecef;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.tabs {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  padding: 0 20px;
+}
+
+.tab {
+  background: none;
+  border: none;
+  padding: 20px 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #6c757d;
+  transition: all 0.2s;
+  border-bottom: 3px solid transparent;
+  position: relative;
+}
+
+.tab:hover {
+  color: #495057;
+  background-color: #f8f9fa;
+}
+
+.tab.active {
+  color: #007bff;
+  border-bottom-color: #007bff;
+  background-color: #f8f9fa;
+}
+
+.tab-icon {
+  font-size: 1.2rem;
+}
+
+.tab-name {
+  font-weight: 500;
+}
+
+.servicios-content {
+  padding: 30px 20px;
+}
+
+@media (max-width: 768px) {
+  .servicios-header {
+    padding: 30px 15px;
+  }
+  
+  .servicios-header h1 {
+    font-size: 2rem;
+  }
+  
+  .servicios-header p {
+    font-size: 1rem;
+  }
+  
+  .tabs {
+    padding: 0 10px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+  
+  .tab {
+    padding: 15px 20px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    min-width: fit-content;
+  }
+  
+  .tab-name {
+    display: none;
+  }
+  
+  .servicios-content {
+    padding: 20px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tabs {
+    justify-content: space-around;
+  }
+  
+  .tab {
+    flex: 1;
+    text-align: center;
+    padding: 15px 10px;
+  }
+  
+  .tab-icon {
+    font-size: 1.5rem;
+  }
+} 

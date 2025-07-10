@@ -1,51 +1,223 @@
 import { useNavigate } from 'react-router-dom';
-import './HomeCliente.css'; // Opcional si quieres usar CSS separado
-import {jwtDecode} from 'jwt-decode';
-import { useEffect, useState } from 'react';
-
+import { useAuthContext } from '../context/AuthContext';
+import { useState, useEffect } from 'react';
+import { serviciosApi } from '../services/serviciosApi';
+import './HomeCliente.css';
 
 function HomeCliente() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
+  const { user, logout, loading } = useAuthContext();
+  const [estadisticas, setEstadisticas] = useState({
+    totalServicios: 0,
+    serviciosActivos: 0,
+    ultimoServicio: null
+  });
+  const [loadingEstadisticas, setLoadingEstadisticas] = useState(true);
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const decoded = jwtDecode(token);
-      const formateado = capitalizar(decoded.username);
-      setUsername(formateado);
-
-    }
-  }, []);
-
-  function capitalizar(texto) {
-  if (!texto) return '';
-  return texto.charAt(0).toUpperCase() + texto.slice(1);
-}
-
-
-   const handleLogout = () => {
-    localStorage.clear(); // o elimina solo lo necesario
+  const handleLogout = () => {
+    logout();
     alert('Sesión cerrada 🔒');
     navigate('/login');
   };
 
+  const capitalizar = (texto) => {
+    if (!texto) return '';
+    return texto.charAt(0).toUpperCase() + texto.slice(1);
+  };
+
+  // Función para obtener estadísticas del usuario
+  const obtenerEstadisticas = async () => {
+    try {
+      setLoadingEstadisticas(true);
+      const servicios = await serviciosApi.obtenerMisServicios();
+      
+      const serviciosActivos = servicios.filter(s => 
+        s.estado && ['pendiente', 'en_proceso', 'asignado'].includes(s.estado.toLowerCase())
+      );
+
+      const ultimoServicio = servicios.length > 0 
+        ? servicios.sort((a, b) => new Date(b.fechaCreacion || b.createdAt) - new Date(a.fechaCreacion || a.createdAt))[0]
+        : null;
+
+      setEstadisticas({
+        totalServicios: servicios.length,
+        serviciosActivos: serviciosActivos.length,
+        ultimoServicio
+      });
+    } catch (error) {
+      console.error('Error al obtener estadísticas:', error);
+      // En caso de error, mantener valores por defecto
+    } finally {
+      setLoadingEstadisticas(false);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      obtenerEstadisticas();
+    }
+  }, [user]);
+
+  const accionesRapidas = [
+    {
+      titulo: 'Solicitar Servicio de Grúa',
+      descripcion: 'Solicita asistencia en carretera',
+      icono: '🚛',
+      color: '#FF5722',
+      accion: () => {
+        navigate('/servicios', { state: { tabActiva: 'lista', filtroTipo: 'grua' } });
+      }
+    },
+    {
+      titulo: 'Buscar Mecánico',
+      descripcion: 'Encuentra mecánicos cerca de ti',
+      icono: '🔧',
+      color: '#2196F3',
+      accion: () => {
+        navigate('/servicios', { state: { tabActiva: 'lista', filtroTipo: 'mecanico' } });
+      }
+    },
+    {
+      titulo: user?.userType === 'cliente' ? 'Ver Todos los Servicios' : 'Ver Mis Servicios',
+      descripcion: user?.userType === 'cliente' ? 'Explora servicios disponibles' : 'Revisa tus servicios activos',
+      icono: '📋',
+      color: '#4CAF50',
+      accion: () => {
+        if (user?.userType === 'cliente') {
+          navigate('/servicios', { state: { tabActiva: 'lista' } });
+        } else {
+          navigate('/servicios', { state: { tabActiva: 'mis-servicios' } });
+        }
+      }
+    },
+    {
+      titulo: 'Servicios Cercanos',
+      descripcion: 'Explora servicios por ubicación',
+      icono: '📍',
+      color: '#9C27B0',
+      accion: () => {
+        navigate('/servicios', { state: { tabActiva: 'cercanos' } });
+      }
+    }
+  ];
+
+  const obtenerHorarioSaludo = () => {
+    const hora = new Date().getHours();
+    if (hora < 12) return 'Buenos días';
+    if (hora < 18) return 'Buenas tardes';
+    return 'Buenas noches';
+  };
+
+  if (loading) {
+    return (
+      <div className="cliente-home">
+        <div className="loading">
+          <div className="spinner"></div>
+          <p>Cargando...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="cliente-home">
-      <h1>Bienvenido, {username} 👋</h1>
-      <p>¿Qué deseas hacer hoy?</p>
+      {/* Sección de bienvenida */}
+      <div className="welcome-section">
+        <h1>{obtenerHorarioSaludo()}, {capitalizar(user?.username || 'Usuario')} 👋</h1>
+        <p className="welcome-subtitle">¿En qué podemos ayudarte hoy?</p>
+      </div>
 
-      <div className="acciones">
-        <button onClick={() => navigate('/cliente/solicitar')}>
-          📌 Solicitar un servicio
+      {/* Acciones rápidas */}
+      <div className="quick-actions-section">
+        <h2>🚀 Acciones rápidas</h2>
+        <div className="actions-grid">
+          {accionesRapidas.map((accion, index) => (
+            <div 
+              key={index} 
+              className="action-card"
+              onClick={accion.accion}
+              style={{ '--card-color': accion.color }}
+            >
+              <div className="action-icon">{accion.icono}</div>
+              <div className="action-content">
+                <h3>{accion.titulo}</h3>
+                <p>{accion.descripcion}</p>
+              </div>
+              <div className="action-arrow">→</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Información útil */}
+      <div className="info-section">
+        <h2>ℹ️ Información útil</h2>
+        <div className="info-cards">
+          <div className="info-card">
+            <div className="info-header">
+              <span className="info-icon">🚨</span>
+              <h3>Servicios de Emergencia</h3>
+            </div>
+            <p>Para emergencias críticas, nuestros servicios están disponibles 24/7. Utiliza la opción "Urgente" al crear tu solicitud.</p>
+          </div>
+          <div className="info-card">
+            <div className="info-header">
+              <span className="info-icon">📱</span>
+              <h3>Geolocalización</h3>
+            </div>
+            <p>Activa tu ubicación para encontrar los servicios más cercanos y obtener tiempos de respuesta más rápidos.</p>
+          </div>
+          <div className="info-card">
+            <div className="info-header">
+              <span className="info-icon">⭐</span>
+              <h3>Calificaciones</h3>
+            </div>
+            <p>Después de cada servicio, podrás calificar a tu proveedor para ayudar a otros usuarios.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Último servicio */}
+      {estadisticas.ultimoServicio && (
+        <div className="recent-service-section">
+          <h2>🕐 {user?.userType === 'cliente' ? 'Último servicio utilizado' : 'Último servicio publicado'}</h2>
+          <div className="recent-service-card">
+            <div className="service-header">
+              <span className="service-type">
+                {estadisticas.ultimoServicio.tipoServicio === 'grua' ? '🚛' : '🔧'} 
+                {capitalizar(estadisticas.ultimoServicio.tipoServicio || 'Servicio')}
+              </span>
+              <span className="service-status">
+                {estadisticas.ultimoServicio.estado || 'Sin estado'}
+              </span>
+            </div>
+            <p className="service-description">
+              {estadisticas.ultimoServicio.descripcionProblema || 'Sin descripción disponible'}
+            </p>
+            <div className="service-footer">
+              <span className="service-date">
+                {estadisticas.ultimoServicio.fechaCreacion 
+                  ? new Date(estadisticas.ultimoServicio.fechaCreacion).toLocaleDateString()
+                  : 'Fecha no disponible'
+                }
+              </span>
+              <button 
+                className="btn-small"
+                onClick={() => navigate('/servicios')}
+              >
+                Ver detalles
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Botón de ayuda */}
+      <div className="help-section">
+        <p>¿Necesitas ayuda? <strong>Estamos aquí para apoyarte</strong></p>
+        <button className="btn-help" onClick={() => navigate('')}>
+          💬 Centro de Ayuda
         </button>
-
-        <button onClick={() => navigate('/cliente/mis-solicitudes')}>
-          📄 Ver mis solicitudes
-        </button>
-
-         <button onClick={handleLogout}>Cerrar sesión</button>
-
       </div>
     </div>
   );

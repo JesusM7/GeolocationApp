@@ -1,61 +1,128 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../context/AuthContext';
+import { useValidation, validationRules } from '../../hooks/useValidation';
+import ErrorMessage from '../../components/ErrorMessage';
 import './LoginCliente.css';
 import axios from 'axios';
 
-
 function LoginCliente() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+  const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuthContext();
+
+  // Esquema de validación
+  const validationSchema = {
+    email: [
+      validationRules.required,
+      validationRules.email
+    ],
+    password: [
+      validationRules.required,
+      validationRules.minLength(6)
+    ]
+  };
+
+  const { errors, validateForm, validateSingleField, clearFieldError } = useValidation(validationSchema);
+
+  const handleInputChange = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    setServerError(''); // Limpiar errores del servidor
+    
+    // Validar campo individual cuando el usuario deja de escribir
+    if (value.trim()) {
+      validateSingleField(field, value);
+    } else {
+      clearFieldError(field);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setServerError('');
+
+    // Validar formulario completo
+    if (!validateForm(formData)) {
+      return;
+    }
+
+    setLoading(true);
 
     try {
       const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/login`, {
-        email,
-        password,
+        email: formData.email,
+        password: formData.password,
       });
 
       const { token, user_type } = res.data;
 
-      localStorage.setItem('token', token);
-      localStorage.setItem('user_type', user_type);
+      // Usar el hook de autenticación para manejar el login
+      const loginSuccess = login(token, { user_type });
 
-      alert('Inicio de sesión exitoso 🎉');
+      if (loginSuccess) {
+        
 
-      if (user_type === 'admin') {
-        navigate('/admin');
+        // Redirigir según el tipo de usuario
+        if (user_type === 'admin') {
+          navigate('/admin');
+        } else {
+          navigate('/cliente/home');
+        }
       } else {
-        navigate('/cliente/home');
+        setServerError('Error al procesar la autenticación');
       }
     } catch (err) {
       console.error(err);
-      alert(err.response?.data?.message || 'Error al iniciar sesión ❌');
+      const errorMessage = err.response?.data?.message || 'Error al iniciar sesión';
+      setServerError(errorMessage);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="login-cliente">
       <h2>🔐 Iniciar sesión</h2>
+      
+      {serverError && (
+        <ErrorMessage error={serverError} />
+      )}
+
       <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Correo electrónico"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Ingresar</button>
+        <div className="form-group">
+          <input
+            type="email"
+            placeholder="Correo electrónico"
+            value={formData.email}
+            onChange={(e) => handleInputChange('email', e.target.value)}
+            disabled={loading}
+            className={errors.email ? 'input-error' : ''}
+          />
+          <ErrorMessage error={errors.email} />
+        </div>
+
+        <div className="form-group">
+          <input
+            type="password"
+            placeholder="Contraseña"
+            value={formData.password}
+            onChange={(e) => handleInputChange('password', e.target.value)}
+            disabled={loading}
+            className={errors.password ? 'input-error' : ''}
+          />
+          <ErrorMessage error={errors.password} />
+        </div>
+
+        <button type="submit" disabled={loading || Object.keys(errors).length > 0}>
+          {loading ? 'Iniciando sesión...' : 'Ingresar'}
+        </button>
       </form>
+      
       <div className="login-extra">
         <p>¿No tienes cuenta? <a href="/register">Regístrate aquí</a></p>
       </div>

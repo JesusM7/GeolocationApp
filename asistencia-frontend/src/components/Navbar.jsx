@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext';
 import { getRoleDisplayName, getRoleIcon } from '../utils/roleUtils';
 import './Navbar.css';
+import logoSvg from '../assets/AsisCarLogo.svg';
 
 const Navbar = () => {
   const { user, isAuthenticated, logout } = useAuthContext();
@@ -22,7 +23,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/cliente/home" className="navbar-brand">
-          🚗LOGO
+          <img src={logoSvg} alt="AsisCar Logo" className="navbar-logo" />
         </Link>
 
         <div className="navbar-menu">

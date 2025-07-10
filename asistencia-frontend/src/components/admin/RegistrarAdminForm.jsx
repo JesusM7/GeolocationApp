@@ -237,7 +237,7 @@ const RegistrarAdminForm = ({ onSuccess, onCancel }) => {
             className="btn btn-primary"
             disabled={loading || Object.keys(errors).length > 0}
           >
-            {loading ? 'Registrando...' : '✅ Registrar Administrador'}
+            {loading ? 'Registrando...' : 'Registrar Administrador'}
           </button>
         </div>
       </form>

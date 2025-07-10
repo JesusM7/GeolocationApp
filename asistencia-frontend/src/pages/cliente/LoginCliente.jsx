@@ -4,7 +4,8 @@ import { useAuthContext } from '../../context/AuthContext';
 import { useValidation, validationRules } from '../../hooks/useValidation';
 import ErrorMessage from '../../components/ErrorMessage';
 import './LoginCliente.css';
-import axios from 'axios';
+import API from '../../services/api';
+import { ENDPOINTS } from '../../config/api.config.js';
 
 function LoginCliente() {
   const [formData, setFormData] = useState({
@@ -54,7 +55,7 @@ function LoginCliente() {
     setLoading(true);
 
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/login`, {
+      const res = await API.post(ENDPOINTS.AUTH.LOGIN, {
         email: formData.email,
         password: formData.password,
       });
@@ -65,8 +66,6 @@ function LoginCliente() {
       const loginSuccess = login(token, { user_type });
 
       if (loginSuccess) {
-        
-
         // Redirigir según el tipo de usuario
         if (user_type === 'admin') {
           navigate('/admin');

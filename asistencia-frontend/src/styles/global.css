@@ -64,7 +64,7 @@ body {
 
 .btn-success {
   background-color: #28a745;
-  color: white;
+  color: #1a1919;
 }
 
 .btn-success:hover:not(:disabled) {

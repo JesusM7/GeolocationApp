@@ -1,11 +1,12 @@
 import API from './api';
+import { ENDPOINTS } from '../config/api.config.js';
 
 // API para gestión de servicios (grúa y mecánico)
 export const serviciosApi = {
   // Crear un nuevo servicio
   crearServicio: async (servicioData) => {
     try {
-      const response = await API.post('/servicios', servicioData);
+      const response = await API.post(ENDPOINTS.SERVICES.CREATE, servicioData);
       return response.data;
     } catch (error) {
       // Preservar el objeto error completo para mejor manejo en el frontend
@@ -21,7 +22,7 @@ export const serviciosApi = {
       if (filtros.ciudad) params.append('ciudad', filtros.ciudad);
       if (filtros.disponible !== undefined) params.append('disponible', filtros.disponible);
       
-      const response = await API.get(`/servicios?${params.toString()}`);
+      const response = await API.get(`${ENDPOINTS.SERVICES.LIST}?${params.toString()}`);
       return response.data;
     } catch (error) {
       throw error;
@@ -31,7 +32,7 @@ export const serviciosApi = {
   // Obtener mis servicios (del usuario autenticado)
   obtenerMisServicios: async () => {
     try {
-      const response = await API.get('/servicios/mis-servicios');
+      const response = await API.get(ENDPOINTS.SERVICES.BY_USER);
       return response.data;
     } catch (error) {
       throw error;
@@ -49,7 +50,7 @@ export const serviciosApi = {
       
       if (tipo) params.append('tipo', tipo);
       
-      const response = await API.get(`/servicios/cercanos?${params.toString()}`);
+      const response = await API.get(`${ENDPOINTS.SERVICES.NEARBY}?${params.toString()}`);
       return response.data;
     } catch (error) {
       throw error;
@@ -59,7 +60,7 @@ export const serviciosApi = {
   // Obtener servicio por ID
   obtenerServicioPorId: async (id) => {
     try {
-      const response = await API.get(`/servicios/${id}`);
+      const response = await API.get(ENDPOINTS.SERVICES.GET_BY_ID(id));
       return response.data;
     } catch (error) {
       throw error;
@@ -69,7 +70,7 @@ export const serviciosApi = {
   // Actualizar servicio
   actualizarServicio: async (id, servicioData) => {
     try {
-      const response = await API.put(`/servicios/${id}`, servicioData);
+      const response = await API.put(ENDPOINTS.SERVICES.UPDATE(id), servicioData);
       return response.data;
     } catch (error) {
       throw error;
@@ -79,7 +80,7 @@ export const serviciosApi = {
   // Cambiar disponibilidad del servicio
   cambiarDisponibilidad: async (id, disponible) => {
     try {
-      const response = await API.patch(`/servicios/${id}/disponibilidad`, { disponible });
+      const response = await API.patch(ENDPOINTS.SERVICES.TOGGLE_AVAILABILITY(id), { disponible });
       return response.data;
     } catch (error) {
       throw error;
@@ -92,7 +93,7 @@ export const serviciosApi = {
       const formData = new FormData();
       formData.append('foto', archivo);
       
-      const response = await API.post('/uploads/servicio', formData, {
+      const response = await API.post(ENDPOINTS.UPLOADS.SERVICE_IMAGE, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         }
@@ -106,7 +107,7 @@ export const serviciosApi = {
   // Eliminar servicio
   eliminarServicio: async (id) => {
     try {
-      const response = await API.delete(`/servicios/${id}`);
+      const response = await API.delete(ENDPOINTS.SERVICES.DELETE(id));
       return response.data;
     } catch (error) {
       throw error;

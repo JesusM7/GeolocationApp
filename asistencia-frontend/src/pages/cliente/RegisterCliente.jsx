@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useValidation, validationRules } from '../../hooks/useValidation';
 import ErrorMessage from '../../components/ErrorMessage';
 import './RegisterCliente.css';
-import axios from 'axios';
+import API from '../../services/api';
+import { ENDPOINTS } from '../../config/api.config.js';
 
 function RegisterCliente() {
   const [formData, setFormData] = useState({
@@ -84,8 +85,7 @@ function RegisterCliente() {
     setLoading(true);
 
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/register`, formData);
-
+      const res = await API.post(ENDPOINTS.AUTH.REGISTER, formData);
       navigate('/login');
     } catch (error) {
       console.error('Error:', error);
@@ -206,15 +206,12 @@ function RegisterCliente() {
           <ErrorMessage error={errors.confirm_password} />
         </div>
 
-        <button 
-          type="submit" 
-          disabled={loading || Object.keys(errors).length > 0}
-        >
-          {loading ? 'Registrando...' : '✅ Registrarse'}
+        <button type="submit" disabled={loading || Object.keys(errors).length > 0}>
+          {loading ? 'Creando cuenta...' : 'Crear cuenta'}
         </button>
       </form>
-
-      <div className="register-extra">
+      
+      <div className="login-extra">
         <p>¿Ya tienes cuenta? <a href="/login">Inicia sesión aquí</a></p>
       </div>
     </div>
